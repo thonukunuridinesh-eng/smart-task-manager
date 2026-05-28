@@ -1,0 +1,4 @@
+postgresql_13.exe
+venv/
+__pycache__/
+.env

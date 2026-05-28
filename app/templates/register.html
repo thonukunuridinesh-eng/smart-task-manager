@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Smart Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Center the registration card perfectly on the screen */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        }
+        .register-container h1 {
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: none;
+            padding: 0;
+            border: none;
+            margin-bottom: 20px;
+        }
+        .register-form input {
+            width: 100%;
+        }
+        .footer-text {
+            text-align: center;
+            font-size: 14px;
+            color: #4a5568;
+            margin-top: 15px;
+        }
+        .footer-text a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <h1>Create Account</h1>
+    <p class="subtitle">Join us to organize your workflow</p>
+
+    <!-- ⚠️ Flask Flash Messages (Displays system warnings or notifications) -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- 📝 Registration Submission Form -->
+    <form class="register-form" method="POST" action="{{ url_for('auth.register') }}">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <div class="footer-text">
+        Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a>
+    </div>
+
+</div>
+
+</body>
+</html>

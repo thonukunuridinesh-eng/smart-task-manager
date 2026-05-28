@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🚪 Header with Logout link -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Smart Task Manager</h1>
+        <a href="{{ url_for('auth.logout') }}" style="color: #e53e3e; text-decoration: none; font-weight: 600; font-size: 14px;">Logout</a>
+    </div>
+
+    <!-- 📊 Analytics Layout optimized for modern card counters -->
+    <div class="analytics">
+        <h3 data-value="{{ analytics.total }}">Total Tasks</h3>
+        <h3 data-value="{{ analytics.completed }}">Completed</h3>
+        <h3 data-value="{{ analytics.pending }}">Pending</h3>
+        <h3 data-value="{{ analytics.percentage }}%">Completion</h3>
+    </div>
+
+    <!-- 📝 Task Input Form -->
+    <form id="taskForm">
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="text" id="description" placeholder="Description" required>
+
+        <select id="priority">
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+        </select>
+
+        <select id="status">
+            <option>Pending</option>
+            <option>Completed</option>
+        </select>
+
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- 📋 Task Items Container -->
+    <div id="tasks">
+        {% for task in tasks %}
+        <!-- 🚀 Dynamic border color based on lowercase priority (high, medium, low) -->
+        <div class="task priority-{{ task.priority | lower }}">
+            
+            <!-- 🛠️ UPDATE: Split header layout block to fit title and action button -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                <h2>{{ task.title }}</h2>
+                <button class="delete-btn" onclick="deleteTask({{ task.id }})">&times;</button>
+            </div>
+            
+            <p class="desc">{{ task.description }}</p>
+            
+            <!-- Dynamic styling badges for UI layout -->
+            <div class="task-tags">
+                <span class="badge priority">{{ task.priority }}</span>
+                <span class="badge status-{{ task.status | lower }}">{{ task.status }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
+
+
