@@ -1,10 +1,13 @@
 [project]
-name = "my-flask-app"
+name = "smart-task-manager"
 version = "0.1.0"
 dependencies = [
-    "flask",
+    "Flask>=3.0.0",
+    "Flask-SQLAlchemy>=3.1.0",
+    "Flask-Login>=0.6.0",
+    "psycopg2-binary>=2.9.0",
+    "werkzeug>=3.0.0",
 ]
 
 [tool.vercel]
 entrypoint = "run:app"
-
